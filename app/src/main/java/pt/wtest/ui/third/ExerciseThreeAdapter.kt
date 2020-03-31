@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.adapter_exercise_one_text_normal.view.*
+import pt.wtest.utils.hideKeyboard
 import tech.innowave.wtest.R
 
-class ExerciseThreeAdapter(private val list: List<ViewTypes>) : RecyclerView.Adapter<ExerciseThreeAdapter.MyViewHolder>() {
+class ExerciseThreeAdapter(private val list: List<ViewTypes>) :
+    RecyclerView.Adapter<ExerciseThreeAdapter.MyViewHolder>() {
 
     enum class ViewTypes {
         NORMAL, NUMBER, ALL_UPPER_CASE
@@ -37,8 +39,13 @@ class ExerciseThreeAdapter(private val list: List<ViewTypes>) : RecyclerView.Ada
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.itemView.apply {
-            val itemViewTypeDesc = ViewTypes.values().get(getItemViewType(position)).name
+            val itemViewTypeDesc = ViewTypes.values()[getItemViewType(position)].name
             tv_label.text = "$itemViewTypeDesc (${position + 1})"
+            et_input.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) {
+                    hideKeyboard()
+                }
+            }
         }
     }
 }
