@@ -7,19 +7,38 @@ android {
     buildToolsVersion "29.0.2"
 
     defaultConfig {
-        applicationId "tech.innowave.wtest"
+        applicationId "pt.wtest"
         minSdkVersion 14
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "WEB_SITE", "\"https://reactnative.dev/\""
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions "version"
+    productFlavors {
+        prod {
+            versionNameSuffix ""
+            dimension "version"
+        }
+        reactnative {
+            versionNameSuffix "-RN"
+            applicationIdSuffix ".reactnative"
+            dimension "version"
+            buildConfigField "String", "WEB_SITE", "\"https://reactnative.dev/\""
+        }
+        flutter {
+            versionNameSuffix "-Flutter"
+            applicationIdSuffix ".flutter"
+            dimension "version"
+            buildConfigField "String", "WEB_SITE", "\"https://flutter.dev/\""
         }
     }
 

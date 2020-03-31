@@ -3,4 +3,5 @@
     <string name="title_home">First</string>
     <string name="title_dashboard">Second</string>
     <string name="title_notifications">Third</string>
+    <string name="title_fourth">Fourth</string>
 </resources>

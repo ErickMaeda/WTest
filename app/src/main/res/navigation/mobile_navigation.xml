@@ -22,4 +22,10 @@
         android:name="pt.wtest.ui.third.ThirdFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_third" />
+
+    <fragment
+        android:id="@+id/navigation_fourth"
+        android:name="pt.wtest.ui.fourth.FourthFragment"
+        android:label="@string/title_fourth"
+        tools:layout="@layout/fragment_fourth" />
 </navigation>
