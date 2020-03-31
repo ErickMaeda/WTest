@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import tech.innowave.wtest.R
+import androidx.lifecycle.ViewModelProvider
+import pt.wtest.R
 
 class FirstFragment : Fragment() {
 
@@ -20,7 +20,7 @@ class FirstFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         firstViewModel =
-                ViewModelProviders.of(this).get(FirstViewModel::class.java)
+                ViewModelProvider(this).get(FirstViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_first, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
         firstViewModel.text.observe(viewLifecycleOwner, Observer {

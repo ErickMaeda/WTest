@@ -6,13 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_fourth.*
-import kotlinx.android.synthetic.main.fragment_third.*
-import pt.wtest.ui.third.ExerciseThreeAdapter
+import pt.wtest.BuildConfig
+import pt.wtest.R
 import pt.wtest.ui.third.FourthViewModel
-import tech.innowave.wtest.BuildConfig
-import tech.innowave.wtest.R
 
 class FourthFragment : Fragment() {
 
@@ -32,6 +29,7 @@ class FourthFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        webview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         webview.loadUrl(BuildConfig.WEB_SITE)
     }
 }

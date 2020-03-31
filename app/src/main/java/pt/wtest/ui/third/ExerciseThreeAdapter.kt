@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.adapter_exercise_one_text_normal.view.*
+import pt.wtest.R
 import pt.wtest.utils.hideKeyboard
-import tech.innowave.wtest.R
 
 class ExerciseThreeAdapter(private val list: List<ViewTypes>) :
     RecyclerView.Adapter<ExerciseThreeAdapter.MyViewHolder>() {
@@ -24,7 +24,6 @@ class ExerciseThreeAdapter(private val list: List<ViewTypes>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
-        Log.d(this.javaClass.simpleName, "viewType: $viewType")
         val layoutId = when (viewType) {
             ViewTypes.ALL_UPPER_CASE.ordinal -> R.layout.adapter_exercise_one_text_uppercase
             ViewTypes.NUMBER.ordinal -> R.layout.adapter_exercise_one_number
