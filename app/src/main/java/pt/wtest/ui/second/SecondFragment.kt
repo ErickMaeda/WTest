@@ -1,4 +1,4 @@
-package tech.innowave.wtest.ui.dashboard
+package pt.wtest.ui.second
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import tech.innowave.wtest.R
 
-class DashboardFragment : Fragment() {
+class SecondFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var secondViewModel: SecondViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        secondViewModel =
+                ViewModelProviders.of(this).get(SecondViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_second, container, false)
         val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+        secondViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

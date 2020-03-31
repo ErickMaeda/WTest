@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="tech.innowave.wtest.ui.home.HomeFragment"
+        android:name="pt.wtest.ui.first.FirstFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_first" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="tech.innowave.wtest.ui.dashboard.DashboardFragment"
+        android:name="pt.wtest.ui.second.SecondFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_second" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="tech.innowave.wtest.ui.notifications.NotificationsFragment"
+        android:name="pt.wtest.ui.third.ThirdFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_third" />
 </navigation>
