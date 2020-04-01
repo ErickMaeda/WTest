@@ -29,7 +29,6 @@ class FourthFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        webview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         webview.loadUrl(BuildConfig.WEB_SITE)
     }
 }

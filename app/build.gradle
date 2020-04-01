@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -15,6 +16,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "WEB_SITE", "\"https://reactnative.dev/\""
         buildConfigField "String", "HEADER_IMAGE", "\"https://firebasestorage.googleapis.com/v0/b/wingman-test-cc79c.appspot.com/o/reactnative.png?alt=media&token=1a172933-1794-4ae6-b5aa-7e78eec60513\""
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {
@@ -79,6 +86,21 @@ dependencies {
     // Customs
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    // retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.1'
+
+    // Room
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
+    kapt "android.arch.persistence.room:compiler:1.1.1"
+
+    // Debug
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+
+    // Test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
