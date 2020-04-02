@@ -9,7 +9,7 @@ import pt.wtest.MainApplication
 import pt.wtest.data.entities.PostalCodeEntity
 
 
-class PostalCodeRepository() {
+class PostalCodeRepository {
     private var database: WTestDatabase? = null
     init {
         database = MainApplication.application?.let { Room.databaseBuilder(it, WTestDatabase::class.java, DB_NAME).build() }
@@ -19,8 +19,16 @@ class PostalCodeRepository() {
         return database?.postalCodeDAO()?.insert(item)
     }
 
+    fun deleteAll(): Int? {
+        return database?.postalCodeDAO()?.deleteAll()
+    }
+
     fun insertMultiple(items: List<PostalCodeEntity>) {
         database?.postalCodeDAO()?.insertMultiple(items)
+    }
+
+    fun getCount(): Int? {
+        return database?.postalCodeDAO()?.getCount()
     }
 
     fun fetchAll(): List<PostalCodeEntity>? {
@@ -40,7 +48,7 @@ class PostalCodeRepository() {
             query = "$query $operator ext_cod_postal LIKE '%$value%'"
         }
         query = "$query GROUP BY nome_localidade, num_cod_postal, ext_cod_postal"
-        query = "$query LIMIT 10000"
+        query = "$query LIMIT 1000"
         return database?.postalCodeDAO()?.fetchSearch(SimpleSQLiteQuery(query))
     }
 }

@@ -16,6 +16,9 @@ import kotlinx.android.synthetic.main.fragment_first.*
 import kotlinx.coroutines.launch
 import pt.wtest.R
 import pt.wtest.data.entities.PostalCodeEntity
+import pt.wtest.utils.gone
+import pt.wtest.utils.show
+
 
 class FirstFragment : Fragment() {
 
@@ -28,8 +31,15 @@ class FirstFragment : Fragment() {
     ): View? {
         viewModel =
             ViewModelProvider(this).get(FirstViewModel::class.java)
+
+        // Observe changes from postalCodes list
         viewModel.postalCodes.observeForever {
             onLoadPostalCodes(it)
+        }
+
+        // Check for loading state
+        viewModel.loadingState.observeForever {
+            onLoadingStateChange(it)
         }
 
         lifecycleScope.launch { viewModel.initialize() }
@@ -40,18 +50,41 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Detect changes on search
         et_search.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-            }
+            override fun afterTextChanged(p0: Editable?) {}
 
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 Log.d(javaClass.simpleName, "onTextChanged $p0")
                 lifecycleScope.launch { viewModel.loadPostalCodes(p0.toString()) }
             }
         })
+    }
+
+    private fun onLoadingStateChange(value: FirstViewModel.LoadingState) {
+        if (value == FirstViewModel.LoadingState.NORMAL) {
+            pb_exercise_one.gone()
+            tv_state.gone()
+        } else if (
+            value == FirstViewModel.LoadingState.INITIAL ||
+            value == FirstViewModel.LoadingState.FETCHING ||
+            value == FirstViewModel.LoadingState.DOWNLOADING
+        ) {
+            pb_exercise_one.show()
+            when (value) {
+                FirstViewModel.LoadingState.INITIAL -> {
+                    tv_state.text = getString(R.string.exercise_one_text_state_loading_checking)
+                    tv_state.show()
+                }
+                FirstViewModel.LoadingState.DOWNLOADING -> {
+                    tv_state.text = getString(R.string.exercise_one_text_state_loading_downloading)
+                    tv_state.show()
+                }
+                else -> tv_state.gone()
+            }
+        }
     }
 
     private fun onLoadPostalCodes(list: List<PostalCodeEntity>) {
