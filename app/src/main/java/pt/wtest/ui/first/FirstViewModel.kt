@@ -45,12 +45,15 @@ class FirstViewModel : ViewModel() {
                 ?.joinToString(" ")
                 ?.split(" ")
                 ?.filter { it.isNotBlank() }
-            if (searchList.isNullOrEmpty()) {
+            Log.d(javaClass.simpleName, "loadPostalCodes | searchList Size: ${searchList?.size} | searchList: $searchList")
+            if (searchList?.size == 0) {
+                Log.d(javaClass.simpleName, "fetchAll")
                 val list = repository.fetchAll()
                 postalCodes.postValue(list)
                 loadingState.postValue(LoadingState.NORMAL)
             } else {
-                val list = repository.fetch(searchList)
+                Log.d(javaClass.simpleName, "fetch")
+                val list = repository.fetch(searchList!!)
                 postalCodes.postValue(list)
                 loadingState.postValue(LoadingState.NORMAL)
             }

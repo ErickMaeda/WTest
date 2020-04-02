@@ -1,12 +1,14 @@
 package pt.wtest.data.room
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
 import pt.wtest.MainApplication
 import pt.wtest.data.entities.PostalCodeEntity
+import java.text.Normalizer
 
 
 class PostalCodeRepository {
@@ -42,13 +44,20 @@ class PostalCodeRepository {
             if (index == 0) {
                operator = " "
             }
-            query = "$query $operator nome_localidade_ascii LIKE '%${value.replace("[^\\p{ASCII}]".toRegex(), "")}%'"
+            query = "$query $operator nome_localidade_ascii LIKE '%${Normalizer.normalize(
+                value,
+                Normalizer.Form.NFD
+            ).replace(
+                "[^\\p{ASCII}]".toRegex(),
+                ""
+            )}%'"
             operator = " OR "
             query = "$query $operator num_cod_postal LIKE '%$value%'"
             query = "$query $operator ext_cod_postal LIKE '%$value%'"
         }
         query = "$query GROUP BY nome_localidade, num_cod_postal, ext_cod_postal"
         query = "$query LIMIT 1000"
+        Log.d(javaClass.simpleName, "fetch | Query: $query")
         return database?.postalCodeDAO()?.fetchSearch(SimpleSQLiteQuery(query))
     }
 }

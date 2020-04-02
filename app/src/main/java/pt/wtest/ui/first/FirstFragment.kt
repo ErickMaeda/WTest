@@ -34,14 +34,10 @@ class FirstFragment : Fragment() {
             ViewModelProvider(this).get(FirstViewModel::class.java)
 
         // Observe changes from postalCodes list
-        viewModel.postalCodes.observeForever {
-            onLoadPostalCodes(it)
-        }
+        viewModel.postalCodes.observeForever { onLoadPostalCodes(it) }
 
         // Check for loading state
-        viewModel.loadingState.observeForever {
-            onLoadingStateChange(it)
-        }
+        viewModel.loadingState.observeForever { onLoadingStateChange(it) }
 
         lifecycleScope.launch { viewModel.initialize() }
 
