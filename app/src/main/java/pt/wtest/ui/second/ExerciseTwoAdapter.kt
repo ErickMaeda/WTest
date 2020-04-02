@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.adapter_exercise_one_text_normal.view.*
+import kotlinx.android.synthetic.main.adapter_exercise_three_text_normal.view.*
 import pt.wtest.R
 
 class ExerciseTwoAdapter() :

@@ -6,7 +6,7 @@ import pt.wtest.data.entities.PostalCodeEntity
 
 val DB_NAME = "WTest"
 
-@Database(entities = [PostalCodeEntity::class], version = 1, exportSchema = false)
+@Database(entities = [PostalCodeEntity::class], version = 2, exportSchema = false)
 abstract class WTestDatabase : RoomDatabase() {
     abstract fun postalCodeDAO(): PostalCodeDAO?
 }

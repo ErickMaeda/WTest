@@ -8,6 +8,7 @@ import java.io.Serializable
 class PostalCodeEntity (
     @PrimaryKey var id: Int?,
     var nome_localidade: String,
+    var nome_localidade_ascii: String,
     var num_cod_postal: String,
     var ext_cod_postal: String
 ) : Serializable

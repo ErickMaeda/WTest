@@ -8,19 +8,19 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="pt.wtest.ui.first.FirstFragment"
-        android:label="@string/title_home"
+        android:label="@string/title_first"
         tools:layout="@layout/fragment_first" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="pt.wtest.ui.second.SecondFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_second"
         tools:layout="@layout/fragment_second" />
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="pt.wtest.ui.third.ThirdFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_third"
         tools:layout="@layout/fragment_third" />
 
     <fragment

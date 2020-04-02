@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">WTest</string>
-    <string name="title_home">First</string>
-    <string name="title_dashboard">Second</string>
-    <string name="title_notifications">Third</string>
+    <string name="title_first">First</string>
+    <string name="title_second">Second</string>
+    <string name="title_third">Third</string>
     <string name="title_fourth">Fourth</string>
+    <string name="default_search">Search</string>
 </resources>

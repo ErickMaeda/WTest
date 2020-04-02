@@ -22,7 +22,7 @@ class FirstFragment : Fragment() {
         viewModel =
             ViewModelProvider(this).get(FirstViewModel::class.java)
 
-        lifecycleScope.launch { viewModel.loadPostalCodes(activity!!.applicationContext) }
+        lifecycleScope.launch { viewModel.loadPostalCodes() }
         return inflater.inflate(R.layout.fragment_first, container, false)
     }
 }
