@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 import pt.wtest.R
 import pt.wtest.data.entities.PostalCodeEntity
 import pt.wtest.utils.gone
+import pt.wtest.utils.hideKeyboard
 import pt.wtest.utils.show
 
 
@@ -50,6 +51,11 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        et_search.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                (et_search).hideKeyboard()
+            }
+        }
         // Detect changes on search
         et_search.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {}
