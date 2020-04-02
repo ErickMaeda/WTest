@@ -17,24 +17,38 @@
         app:title="@string/title_first"
         app:titleTextColor="@android:color/white" />
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
     <EditText
         android:id="@+id/et_search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/default_search"
         android:layout_margin="@dimen/activity_horizontal_margin"
+        android:hint="@string/default_search"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:text="sAo joA da TaLH" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_exercise_one"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_search" />
+        app:layout_constraintTop_toBottomOf="@id/et_search"
+        tools:listitem="@layout/adapter_exercise_one" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

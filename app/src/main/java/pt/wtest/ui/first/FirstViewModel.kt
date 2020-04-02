@@ -3,6 +3,8 @@ package pt.wtest.ui.first
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,89 +18,68 @@ import java.text.Normalizer
 
 class FirstViewModel : ViewModel() {
 
-    suspend fun loadPostalCodes(search: String = "2695-650, São João da Talha") {
+    val postalCodes: MutableLiveData<List<PostalCodeEntity>> by lazy { MutableLiveData<List<PostalCodeEntity>>() }
+
+    suspend fun initialize() {
+        loadPostalCodes()
+    }
+
+    suspend fun loadPostalCodes(search: String? = "") {
+        Log.d(javaClass.simpleName, "loadPostalCodes | $search")
         withContext(Dispatchers.IO) {
             val repository = PostalCodeRepository()
             val searchList = search
-                .split('-')
-                .joinToString(" ")
-                .split(',')
-                .joinToString(" ")
-                .split(" ")
-                .filter { it.isNotBlank() }
-            Log.d(javaClass.simpleName, "searchList $searchList")
-            val list = repository.fetch(searchList)
-            Log.d(javaClass.simpleName, "list ${list?.size}")
+                ?.split('-')
+                ?.joinToString(" ")
+                ?.split(',')
+                ?.joinToString(" ")
+                ?.split(" ")
+                ?.filter { it.isNotBlank() }
+            val list = repository.fetch(searchList!!)
+            postalCodes.postValue(list)
         }
     }
 
     suspend fun downloadAllPostalCodes() {
+        // Download the postal codes on IO Thread
         withContext(Dispatchers.IO) {
             val service: RestApi = RestAdapter().getRetrofitInstance()!!
             val call: Call<ResponseBody> = service.getPostalCodes()
-            Log.d(this.javaClass.simpleName, "before")
-            val response = call.execute()
+            val response = call.execute() // Call API to get results
             Log.d(
                 this.javaClass.simpleName,
-                "after: ${response.isSuccessful} | code: ${response.code()} | message: ${response.message()}"
+                "" +
+                        "isSuccessfull: ${response.isSuccessful} | " +
+                        "code: ${response.code()} | " +
+                        "message: ${response.message()}"
             )
 
             if (response.isSuccessful) {
+
                 val repository = PostalCodeRepository()
                 val rows = response.body()
-                    ?.string()
-                    ?.lines()
-                    ?.drop(1)
-                    ?.dropLast(1)
+                    ?.string() // Get the response as string
+                    ?.lines() // Split the String into lines
+                    ?.drop(1) // Remove the first row that is the labels
+                    ?.dropLast(1) // Remove the last row because it's an empty line
 
                 Log.d("Rows", "${rows?.size}")
 
-//                for (element in rows!!) {
-//                    val rowColumns = element.split(",")
-//                    val lastInsertId = repository.insert(
-//                        PostalCodeEntity(
-//                            id = null,
-//                            nome_localidade = rowColumns[3],
-//                            nome_localidade_ascii = Normalizer.normalize(rowColumns[3], Normalizer.Form.NFD).replace("[^\\p{ASCII}]".toRegex(), ""),
-//                            num_cod_postal = rowColumns[14],
-//                            ext_cod_postal = rowColumns[15]
-//                        )
-//                    )
-//                    Log.d("LastInsertId", "$lastInsertId")
-//                }
-//                val insertValues: MutableList<PostalCodeEntity> = mutableListOf()
-                Log.d(javaClass.simpleName, "before map")
+                // Map the array $rows to a List<PostalCodeEntity>
                 val insertValues: List<PostalCodeEntity> = rows!!.map {
                     val rowColumns = it.split(",")
                     PostalCodeEntity(
                         id = null,
-                        nome_localidade = rowColumns[3],
+                        nome_localidade = rowColumns[3], // Get element column index 3
                         nome_localidade_ascii = Normalizer.normalize(
                             rowColumns[3],
                             Normalizer.Form.NFD
-                        ).replace("[^\\p{ASCII}]".toRegex(), ""),
-                        num_cod_postal = rowColumns[14],
-                        ext_cod_postal = rowColumns[15]
+                        ).replace("[^\\p{ASCII}]".toRegex(), ""), // Get element column index 3 and replace with a normalized ASCII format to be possible to search for values.
+                        num_cod_postal = rowColumns[14], // Get element column index 14
+                        ext_cod_postal = rowColumns[15] // Get element column index 15
                     )
                 }
-                Log.d(javaClass.simpleName, "after map")
-//                for (value in rows!!) {
-//                    val rowColumns = value.split(",")
-//                    insertValues.add(
-//                        PostalCodeEntity(
-//                            id = null,
-//                            nome_localidade = rowColumns[3],
-//                            nome_localidade_ascii = Normalizer.normalize(
-//                                rowColumns[3],
-//                                Normalizer.Form.NFD
-//                            ).replace("[^\\p{ASCII}]".toRegex(), ""),
-//                            num_cod_postal = rowColumns[14],
-//                            ext_cod_postal = rowColumns[15]
-//                        )
-//                    )
-////                    Log.d("rowColumn", "Items on array ${insertValues.size}")
-//                }
-                Log.d(javaClass.simpleName, "Items on array ${insertValues.size}")
+                // Divide the array in pieces of 10k to insert
                 insertValues.chunked(10000).forEach {
                     repository.insertMultiple(it)
                 }
