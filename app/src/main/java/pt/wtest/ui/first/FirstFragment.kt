@@ -64,7 +64,13 @@ class FirstFragment : Fragment() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 Log.d(javaClass.simpleName, "onTextChanged $p0")
-                lifecycleScope.launch { viewModel.loadPostalCodes(p0.toString()) }
+                if (p0?.length!! >= 3) {
+                    lifecycleScope.launch { viewModel.loadPostalCodes(p0.toString()) }
+                } else {
+                    onLoadPostalCodes(emptyList())
+                    tv_state.show()
+                    tv_state.text = getString(R.string.exercise_one_text_state_loading_initial)
+                }
             }
         })
     }
@@ -94,7 +100,7 @@ class FirstFragment : Fragment() {
     }
 
     private fun onLoadPostalCodes(list: List<PostalCodeEntity>) {
-        Log.d(javaClass.simpleName, "On load postal codes ${list.size}")
+        Log.d(javaClass.simpleName, "onLoadPostalCodes ${list.size}")
 
         rv_exercise_one.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
