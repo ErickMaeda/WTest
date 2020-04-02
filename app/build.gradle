@@ -1,0 +1,106 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+    defaultConfig {
+        applicationId "pt.wtest"
+        minSdkVersion 14
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "WEB_SITE", "\"https://reactnative.dev/\""
+        buildConfigField "String", "HEADER_IMAGE", "\"https://firebasestorage.googleapis.com/v0/b/wingman-test-cc79c.appspot.com/o/reactnative.png?alt=media&token=1a172933-1794-4ae6-b5aa-7e78eec60513\""
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions "version"
+    productFlavors {
+        prod {
+            versionNameSuffix ""
+            dimension "version"
+        }
+        reactnative {
+            versionNameSuffix "-RN"
+            applicationIdSuffix ".reactnative"
+            dimension "version"
+            buildConfigField "String", "WEB_SITE", "\"https://reactnative.dev/\""
+            buildConfigField "String", "HEADER_IMAGE", "\"https://firebasestorage.googleapis.com/v0/b/wingman-test-cc79c.appspot.com/o/reactnative.png?alt=media&token=1a172933-1794-4ae6-b5aa-7e78eec60513\""
+        }
+        flutter {
+            versionNameSuffix "-Flutter"
+            applicationIdSuffix ".flutter"
+            dimension "version"
+            buildConfigField "String", "WEB_SITE", "\"https://flutter.dev/\""
+            buildConfigField "String", "HEADER_IMAGE", "\"https://firebasestorage.googleapis.com/v0/b/wingman-test-cc79c.appspot.com/o/flutter.jpeg?alt=media&token=e8600a04-53a7-4106-801d-4c428a30f2ce\""
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+}
+
+dependencies {
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // Google
+    implementation 'com.google.android.material:material:1.1.0'
+
+    // Android X
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
+    implementation 'androidx.navigation:navigation-fragment:2.2.1'
+    implementation 'androidx.navigation:navigation-ui:2.2.1'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.2.1'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha01"
+
+    // Customs
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.1'
+
+    // Room
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    kapt "android.arch.persistence.room:compiler:1.1.1"
+
+    // Debug
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+
+    // Test
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}

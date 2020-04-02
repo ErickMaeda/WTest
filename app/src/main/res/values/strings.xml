@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">WTest</string>
+    <string name="title_first">First</string>
+    <string name="title_second">Second</string>
+    <string name="title_third">Third</string>
+    <string name="title_fourth">Fourth</string>
+
+    <!--    Default values -->
+    <string name="default_search">Search</string>
+
+    <!--    Exercise one -->
+    <string name="exercise_one_text_state_loading_downloading">Downloading content</string>
+    <string name="exercise_one_text_state_loading_checking">Checking content</string>
+    <string name="exercise_one_text_state_loading_initial">Type at least 3 characters to start searching!</string>
+
+
+</resources>
