@@ -3,12 +3,12 @@
 ## Structure
 
 - data
- - Contains ROOM framework and repositories DAO's
+  - Contains ROOM framework and repositories DAO's
 - network
- - Contains Retrofit layer
+  - Contains Retrofit layer
 - ui
- - Activities / Fragments / ViewModels
+  - Activities / Fragments / ViewModels
 - utils
- - Kotlin extensions
+  - Kotlin extensions
 - MainApplication / MainActivity
 
