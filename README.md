@@ -4,7 +4,7 @@
 Mobile developer test for Wingman
 
 ## Test about
-- For README of the test you can check here [here](Enunciado-Mobile-Dev.pdf)
+- For README of the test you can check [here](Enunciado-Mobile-Dev.pdf)
 - There are 4 bottombar screens. Each one for one exercise. Which means (first, second, third, fourth)
 When open the app it checks if you already have all the postal codes in our database(ROOM). If it isn't will download all the data
 
